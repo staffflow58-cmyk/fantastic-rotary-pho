@@ -1,0 +1,329 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>GenTrends — Modern Apparel</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+  <meta name="description" content="GenTrends — Trendy apparel & accessories single-page store" />
+  <style>
+    :root{--bg:#0b0b0d;--card:#0f1113;--muted:#9aa3ad;--accent:#06b6d4;--glass: rgba(255,255,255,0.03);}
+    *{box-sizing:border-box}
+    html,body{height:100%;margin:0;font-family:Inter,system-ui,Arial,sans-serif;background:linear-gradient(180deg,#050506 0%,#0b0b0d 100%);color:#e6eef3}
+    a{color:inherit;text-decoration:none}
+    header{position:sticky;top:0;z-index:40;background:linear-gradient(180deg, rgba(11,11,13,0.85), rgba(11,11,13,0.6));backdrop-filter:blur(6px);border-bottom:1px solid rgba(255,255,255,0.03)}
+    .container{max-width:1100px;margin:0 auto;padding:24px}
+    .nav{display:flex;gap:16px;align-items:center;justify-content:space-between}
+    .brand{display:flex;gap:12px;align-items:center}
+    .logo{width:44px;height:44px;border-radius:10px;background:linear-gradient(135deg,var(--accent),#7c3aed);display:flex;align-items:center;justify-content:center;font-weight:800;color:#041014}
+    .brand h1{font-size:18px;margin:0}
+    nav ul{display:flex;gap:12px;list-style:none;margin:0;padding:0}
+    nav li{padding:6px 10px;border-radius:8px}
+    nav li a{color:var(--muted);font-weight:600;font-size:14px}
+    .actions{display:flex;gap:10px;align-items:center}
+    .btn{background:var(--glass);border:1px solid rgba(255,255,255,0.04);padding:8px 12px;border-radius:10px;font-weight:600;cursor:pointer}
+    .search{display:flex;gap:8px;align-items:center;background:rgba(255,255,255,0.02);padding:6px 8px;border-radius:10px}
+
+    /* Hero */
+    .hero{padding:56px 0;display:grid;grid-template-columns:1fr 420px;gap:32px;align-items:center}
+    .hero .kicker{color:var(--accent);font-weight:700;margin-bottom:12px}
+    .hero h2{font-size:38px;margin:0 0 12px;line-height:1.02}
+    .hero p{color:var(--muted);margin:0 0 18px}
+    .cta-row{display:flex;gap:12px}
+    .primary{background:linear-gradient(90deg,var(--accent),#8b5cf6);border:none;padding:12px 18px;border-radius:12px;color:#021018;font-weight:700}
+    .secondary{background:transparent;border:1px solid rgba(255,255,255,0.06);padding:10px 14px;border-radius:12px}
+    .hero-side{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));padding:18px;border-radius:14px;border:1px solid rgba(255,255,255,0.03)}
+    .badge{display:flex;gap:8px;align-items:center;margin-bottom:12px}
+    .pill{background:rgba(255,255,255,0.03);padding:6px 8px;border-radius:999px;font-weight:700}
+
+    /* Products */
+    section{padding:36px 0}
+    .products-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px}
+    .card{background:var(--card);padding:12px;border-radius:12px;border:1px solid rgba(255,255,255,0.03);display:flex;flex-direction:column;gap:10px}
+    .media{height:200px;border-radius:10px;overflow:hidden;background:#0b0b0b}
+    .media img{width:100%;height:100%;object-fit:cover;display:block}
+    .meta{display:flex;justify-content:space-between;align-items:center}
+    .price{font-weight:800}
+    .muted{color:var(--muted);font-size:13px}
+
+    /* footer */
+    footer{padding:28px 0;border-top:1px solid rgba(255,255,255,0.03);color:var(--muted)}
+
+    /* Cart modal */
+    .cart-btn{position:relative}
+    .cart-count{position:absolute;top:-6px;right:-6px;background:#ff5a5f;color:#fff;border-radius:999px;padding:2px 6px;font-size:12px}
+    .modal{position:fixed;right:20px;bottom:20px;background:var(--card);padding:16px;border-radius:12px;border:1px solid rgba(255,255,255,0.03);width:320px;max-height:70vh;overflow:auto;box-shadow:0 8px 40px rgba(2,6,23,0.8)}
+    .hidden{display:none}
+
+    /* Responsive */
+    @media (max-width:880px){
+      .hero{grid-template-columns:1fr;}
+      .container{padding:16px}
+      .media{height:180px}
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container nav">
+      <div class="brand">
+        <div class="logo" aria-hidden>GT</div>
+        <div>
+          <h1>GenTrends</h1>
+          <div class="muted" style="font-size:12px">Streetwear · Essentials · Accessories</div>
+        </div>
+      </div>
+
+      <nav>
+        <ul>
+          <li><a href="#home">Home</a></li>
+          <li><a href="#shop">Shop</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </nav>
+
+      <div class="actions">
+        <div class="search">
+          <input id="searchInput" placeholder="Search products" style="background:transparent;border:none;outline:none;color:inherit;min-width:160px" />
+          <button class="btn" id="clearSearch">✕</button>
+        </div>
+        <button class="btn" id="toggleCart">Cart <span id="cartCount" class="cart-count hidden">0</span></button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <section id="home" class="hero">
+      <div>
+        <div class="kicker">New — Summer 2025</div>
+        <h2>GenTrends — curated streetwear & essentials
+        </h2>
+        <p>Minimal design. Premium fabric. Timeless silhouettes. Shop a small, curated collection of everyday pieces that feel new every season.</p>
+        <div class="cta-row">
+          <button class="primary" onclick="location.hash='shop'">Shop Collection</button>
+          <button class="secondary" onclick="alert('Join our newsletter — coming soon!')">Join Newsletter</button>
+        </div>
+        <div style="margin-top:16px;color:var(--muted);font-size:13px">Free shipping on orders over ₹1499 • 7-day returns</div>
+      </div>
+
+      <aside class="hero-side">
+        <div class="badge"><div class="pill">Popular</div><div class="muted">Best sellers this week</div></div>
+        <div style="display:grid;gap:10px">
+          <div style="display:flex;gap:10px;align-items:center">
+            <div style="width:72px;height:72px;border-radius:10px;overflow:hidden;background:#051018"><img src="https://picsum.photos/seed/gt1/200/200" alt="item" style="width:100%;height:100%;object-fit:cover"></div>
+            <div>
+              <div style="font-weight:700">Essential Tee</div>
+              <div class="muted">₹799 · M-XXL</div>
+            </div>
+          </div>
+          <div style="display:flex;gap:10px;align-items:center">
+            <div style="width:72px;height:72px;border-radius:10px;overflow:hidden;background:#051018"><img src="https://picsum.photos/seed/gt2/200/200" alt="item" style="width:100%;height:100%;object-fit:cover"></div>
+            <div>
+              <div style="font-weight:700">Signature Hoodie</div>
+              <div class="muted">₹1999 · S-XL</div>
+            </div>
+          </div>
+        </div>
+      </aside>
+    </section>
+
+    <section id="shop">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:18px">
+        <h3 style="margin:0">Shop</h3>
+        <div style="display:flex;gap:8px;align-items:center">
+          <select id="categorySelect" class="btn" style="background:transparent;border-radius:8px">
+            <option value="all">All Categories</option>
+            <option value="tees">Tees</option>
+            <option value="hoodies">Hoodies</option>
+            <option value="accessories">Accessories</option>
+          </select>
+          <select id="sortSelect" class="btn" style="background:transparent;border-radius:8px">
+            <option value="popular">Most Popular</option>
+            <option value="new">New</option>
+            <option value="price-asc">Price: Low → High</option>
+            <option value="price-desc">Price: High → Low</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="products-grid" id="productsGrid">
+        <!-- products injected by JS -->
+      </div>
+    </section>
+
+    <section id="about">
+      <h3>About GenTrends</h3>
+      <p class="muted">GenTrends started as a small passion project to make clean, wearable pieces that last. We focus on ethical sourcing, quality fabrics, and a small-batch approach so every piece gets the attention it deserves.</p>
+      <p class="muted">Based in India — crafted with care.</p>
+    </section>
+
+    <section id="contact">
+      <h3>Contact</h3>
+      <p class="muted">Questions? Email <a href="mailto:hello@gentrends.example">hello@gentrends.example</a> or use the quick form below.</p>
+      <form id="contactForm" style="display:grid;gap:10px;max-width:540px">
+        <input placeholder="Your name" required style="padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.03);background:transparent;color:inherit" />
+        <input placeholder="Email" type="email" required style="padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.03);background:transparent;color:inherit" />
+        <textarea placeholder="Message" rows="4" style="padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.03);background:transparent;color:inherit"></textarea>
+        <div>
+          <button class="primary" type="submit">Send message</button>
+        </div>
+      </form>
+    </section>
+
+    <footer>
+      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px">
+        <div>© <strong>GenTrends</strong> 2025</div>
+        <div class="muted">Made with ♥ — simple single-page store</div>
+      </div>
+    </footer>
+
+  </main>
+
+  <!-- Cart Modal -->
+  <div id="cartModal" class="modal hidden" aria-hidden="true">
+    <h4 style="margin-top:0">Your Cart</h4>
+    <div id="cartItems"></div>
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-top:12px">
+      <div class="muted">Total</div>
+      <div id="cartTotal" style="font-weight:800">₹0</div>
+    </div>
+    <div style="margin-top:12px;display:flex;gap:8px">
+      <button class="primary" id="checkoutBtn">Checkout</button>
+      <button class="secondary" id="closeCart">Close</button>
+    </div>
+  </div>
+
+  <script>
+    // Simple product data — replace with your real catalog or import from JSON
+    const PRODUCTS = [
+      {id:1,title:'Essential Tee',price:799,category:'tees',img:'https://picsum.photos/seed/gtp1/600/600',desc:'Soft cotton tee — everyday fit.'},
+      {id:2,title:'Signature Hoodie',price:1999,category:'hoodies',img:'https://picsum.photos/seed/gtp2/600/600',desc:'Cozy mid-weight hoodie.'},
+      {id:3,title:'Ribbed Beanie',price:499,category:'accessories',img:'https://picsum.photos/seed/gtp3/600/600',desc:'Warm stretch fit.'},
+      {id:4,title:'Relaxed Shirt',price:1199,category:'tees',img:'https://picsum.photos/seed/gtp4/600/600',desc:'Breezy, casual shirt.'},
+      {id:5,title:'Street Shorts',price:999,category:'tees',img:'https://picsum.photos/seed/gtp5/600/600',desc:'Comfort first shorts.'},
+      {id:6,title:'Canvas Tote',price:349,category:'accessories',img:'https://picsum.photos/seed/gtp6/600/600',desc:'Everyday carry tote.'}
+    ];
+
+    // Cart state in localStorage
+    const CART_KEY = 'gentrends_cart_v1';
+    function loadCart(){try{return JSON.parse(localStorage.getItem(CART_KEY))||{}}catch(e){return {}}}
+    function saveCart(cart){localStorage.setItem(CART_KEY,JSON.stringify(cart))}
+
+    const productsGrid = document.getElementById('productsGrid');
+    const searchInput = document.getElementById('searchInput');
+    const categorySelect = document.getElementById('categorySelect');
+    const sortSelect = document.getElementById('sortSelect');
+    const cartModal = document.getElementById('cartModal');
+    const cartItemsEl = document.getElementById('cartItems');
+    const cartTotalEl = document.getElementById('cartTotal');
+    const cartCount = document.getElementById('cartCount');
+
+    let cart = loadCart();
+
+    function renderProducts(){
+      const q = (searchInput.value||'').toLowerCase().trim();
+      const cat = categorySelect.value;
+      let list = PRODUCTS.filter(p=> (cat==='all'||p.category===cat) && (p.title.toLowerCase().includes(q) || p.desc.toLowerCase().includes(q)));
+      // sort
+      const sort = sortSelect.value;
+      if(sort==='price-asc') list.sort((a,b)=>a.price-b.price);
+      if(sort==='price-desc') list.sort((a,b)=>b.price-a.price);
+      if(sort==='new') list = list.slice().reverse();
+
+      productsGrid.innerHTML = '';
+      list.forEach(p=>{
+        const card = document.createElement('div'); card.className='card';
+        card.innerHTML = `
+          <div class="media"><img src="${p.img}" alt="${p.title}"></div>
+          <div style="display:flex;justify-content:space-between;align-items:center">
+            <div>
+              <div style="font-weight:700">${p.title}</div>
+              <div class="muted">${p.desc}</div>
+            </div>
+            <div style="text-align:right">
+              <div class="price">₹${p.price}</div>
+              <div class="muted" style="font-size:12px">VAT incl.</div>
+            </div>
+          </div>
+          <div style="display:flex;gap:8px">
+            <button class="btn" onclick="addToCart(${p.id})">Add to cart</button>
+            <button class="btn" onclick="viewProduct(${p.id})">View</button>
+          </div>
+        `;
+        productsGrid.appendChild(card);
+      })
+    }
+
+    function addToCart(id){
+      cart = loadCart();
+      cart[id] = (cart[id]||0)+1;
+      saveCart(cart);
+      updateCartUI();
+      openCart();
+    }
+
+    function viewProduct(id){
+      const p = PRODUCTS.find(x=>x.id===id);
+      alert(p.title + " — ₹"+p.price+"\n\n"+p.desc);
+    }
+
+    function updateCartUI(){
+      cart = loadCart();
+      const keys = Object.keys(cart);
+      const count = keys.reduce((s,k)=>s+cart[k],0);
+      if(count>0){cartCount.classList.remove('hidden');cartCount.textContent=count}else{cartCount.classList.add('hidden')}
+
+      // render items
+      cartItemsEl.innerHTML='';
+      let total=0;
+      keys.forEach(k=>{
+        const qty = cart[k];
+        const p = PRODUCTS.find(x=>x.id==k);
+        if(!p) return;
+        total += p.price * qty;
+        const item = document.createElement('div');
+        item.style.display='flex';item.style.justifyContent='space-between';item.style.alignItems='center';item.style.padding='8px 0';
+        item.innerHTML = `<div style="min-width:0"><div style="font-weight:700">${p.title}</div><div class="muted" style="font-size:13px">₹${p.price} × ${qty}</div></div><div style="display:flex;gap:6px;align-items:center"><button class="btn" onclick="decrease(${p.id})">−</button><button class="btn" onclick="increase(${p.id})">+</button><button class="btn" onclick="removeItem(${p.id})">Remove</button></div>`;
+        cartItemsEl.appendChild(item);
+      })
+      cartTotalEl.textContent = '₹'+total;
+    }
+
+    function increase(id){cart[id]=(cart[id]||0)+1;saveCart(cart);updateCartUI();}
+    function decrease(id){if(!cart[id]) return;cart[id]=Math.max(0,cart[id]-1);if(cart[id]===0) delete cart[id];saveCart(cart);updateCartUI();}
+    function removeItem(id){delete cart[id];saveCart(cart);updateCartUI();}
+
+    function openCart(){cartModal.classList.remove('hidden');cartModal.setAttribute('aria-hidden','false')}
+    function closeCart(){cartModal.classList.add('hidden');cartModal.setAttribute('aria-hidden','true')}
+
+    document.getElementById('toggleCart').addEventListener('click',()=>{
+      if(cartModal.classList.contains('hidden')) openCart(); else closeCart();
+    })
+    document.getElementById('closeCart').addEventListener('click',closeCart);
+    document.getElementById('checkoutBtn').addEventListener('click',()=>{alert('Checkout flow not implemented — integrate a payment gateway or redirect to cart page.');})
+
+    document.getElementById('clearSearch').addEventListener('click',()=>{searchInput.value='';renderProducts();})
+    searchInput.addEventListener('input',()=>renderProducts());
+    categorySelect.addEventListener('change',renderProducts);
+    sortSelect.addEventListener('change',renderProducts);
+
+    // contact form stub
+    document.getElementById('contactForm').addEventListener('submit', (e)=>{e.preventDefault();alert('Thanks! Message received (demo).');e.target.reset()})
+
+    // hash navigation smooth
+    document.querySelectorAll('a[href^="#"]').forEach(a=>{
+      a.addEventListener('click', (ev)=>{
+        ev.preventDefault(); const tgt = document.querySelector(a.getAttribute('href')); if(tgt) tgt.scrollIntoView({behavior:'smooth',block:'start'});
+      })
+    })
+
+    // initialize
+    renderProducts();
+    updateCartUI();
+  </script>
+</body>
+  </html>
+          
