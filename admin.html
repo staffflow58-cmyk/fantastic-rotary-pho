@@ -198,6 +198,9 @@
             try {
                 await signInWithEmailAndPassword(auth, email, password);
                 showMessage("Login successful!");
+                // The fix: manually update UI state immediately
+                loginFormSection.classList.add('hidden');
+                adminDashboardSection.classList.remove('hidden');
             } catch (error) {
                 console.error("Login failed: ", error);
                 showMessage('Login failed. Check your credentials.', true);
