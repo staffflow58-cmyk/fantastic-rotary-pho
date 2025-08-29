@@ -1,329 +1,448 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>GenTrends — Modern Apparel</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
-  <meta name="description" content="GenTrends — Trendy apparel & accessories single-page store" />
-  <style>
-    :root{--bg:#0b0b0d;--card:#0f1113;--muted:#9aa3ad;--accent:#06b6d4;--glass: rgba(255,255,255,0.03);}
-    *{box-sizing:border-box}
-    html,body{height:100%;margin:0;font-family:Inter,system-ui,Arial,sans-serif;background:linear-gradient(180deg,#050506 0%,#0b0b0d 100%);color:#e6eef3}
-    a{color:inherit;text-decoration:none}
-    header{position:sticky;top:0;z-index:40;background:linear-gradient(180deg, rgba(11,11,13,0.85), rgba(11,11,13,0.6));backdrop-filter:blur(6px);border-bottom:1px solid rgba(255,255,255,0.03)}
-    .container{max-width:1100px;margin:0 auto;padding:24px}
-    .nav{display:flex;gap:16px;align-items:center;justify-content:space-between}
-    .brand{display:flex;gap:12px;align-items:center}
-    .logo{width:44px;height:44px;border-radius:10px;background:linear-gradient(135deg,var(--accent),#7c3aed);display:flex;align-items:center;justify-content:center;font-weight:800;color:#041014}
-    .brand h1{font-size:18px;margin:0}
-    nav ul{display:flex;gap:12px;list-style:none;margin:0;padding:0}
-    nav li{padding:6px 10px;border-radius:8px}
-    nav li a{color:var(--muted);font-weight:600;font-size:14px}
-    .actions{display:flex;gap:10px;align-items:center}
-    .btn{background:var(--glass);border:1px solid rgba(255,255,255,0.04);padding:8px 12px;border-radius:10px;font-weight:600;cursor:pointer}
-    .search{display:flex;gap:8px;align-items:center;background:rgba(255,255,255,0.02);padding:6px 8px;border-radius:10px}
-
-    /* Hero */
-    .hero{padding:56px 0;display:grid;grid-template-columns:1fr 420px;gap:32px;align-items:center}
-    .hero .kicker{color:var(--accent);font-weight:700;margin-bottom:12px}
-    .hero h2{font-size:38px;margin:0 0 12px;line-height:1.02}
-    .hero p{color:var(--muted);margin:0 0 18px}
-    .cta-row{display:flex;gap:12px}
-    .primary{background:linear-gradient(90deg,var(--accent),#8b5cf6);border:none;padding:12px 18px;border-radius:12px;color:#021018;font-weight:700}
-    .secondary{background:transparent;border:1px solid rgba(255,255,255,0.06);padding:10px 14px;border-radius:12px}
-    .hero-side{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));padding:18px;border-radius:14px;border:1px solid rgba(255,255,255,0.03)}
-    .badge{display:flex;gap:8px;align-items:center;margin-bottom:12px}
-    .pill{background:rgba(255,255,255,0.03);padding:6px 8px;border-radius:999px;font-weight:700}
-
-    /* Products */
-    section{padding:36px 0}
-    .products-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px}
-    .card{background:var(--card);padding:12px;border-radius:12px;border:1px solid rgba(255,255,255,0.03);display:flex;flex-direction:column;gap:10px}
-    .media{height:200px;border-radius:10px;overflow:hidden;background:#0b0b0b}
-    .media img{width:100%;height:100%;object-fit:cover;display:block}
-    .meta{display:flex;justify-content:space-between;align-items:center}
-    .price{font-weight:800}
-    .muted{color:var(--muted);font-size:13px}
-
-    /* footer */
-    footer{padding:28px 0;border-top:1px solid rgba(255,255,255,0.03);color:var(--muted)}
-
-    /* Cart modal */
-    .cart-btn{position:relative}
-    .cart-count{position:absolute;top:-6px;right:-6px;background:#ff5a5f;color:#fff;border-radius:999px;padding:2px 6px;font-size:12px}
-    .modal{position:fixed;right:20px;bottom:20px;background:var(--card);padding:16px;border-radius:12px;border:1px solid rgba(255,255,255,0.03);width:320px;max-height:70vh;overflow:auto;box-shadow:0 8px 40px rgba(2,6,23,0.8)}
-    .hidden{display:none}
-
-    /* Responsive */
-    @media (max-width:880px){
-      .hero{grid-template-columns:1fr;}
-      .container{padding:16px}
-      .media{height:180px}
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GenTrends E-commerce</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #f7fafc; }
+        .modal-overlay { background-color: rgba(0, 0, 0, 0.5); }
+        .product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 1rem; }
+    </style>
 </head>
-<body>
-  <header>
-    <div class="container nav">
-      <div class="brand">
-        <div class="logo" aria-hidden>GT</div>
-        <div>
-          <h1>GenTrends</h1>
-          <div class="muted" style="font-size:12px">Streetwear · Essentials · Accessories</div>
-        </div>
-      </div>
-
-      <nav>
-        <ul>
-          <li><a href="#home">Home</a></li>
-          <li><a href="#shop">Shop</a></li>
-          <li><a href="#about">About</a></li>
-          <li><a href="#contact">Contact</a></li>
-        </ul>
-      </nav>
-
-      <div class="actions">
-        <div class="search">
-          <input id="searchInput" placeholder="Search products" style="background:transparent;border:none;outline:none;color:inherit;min-width:160px" />
-          <button class="btn" id="clearSearch">✕</button>
-        </div>
-        <button class="btn" id="toggleCart">Cart <span id="cartCount" class="cart-count hidden">0</span></button>
-      </div>
-    </div>
-  </header>
-
-  <main class="container">
-    <section id="home" class="hero">
-      <div>
-        <div class="kicker">New — Summer 2025</div>
-        <h2>GenTrends — curated streetwear & essentials
-        </h2>
-        <p>Minimal design. Premium fabric. Timeless silhouettes. Shop a small, curated collection of everyday pieces that feel new every season.</p>
-        <div class="cta-row">
-          <button class="primary" onclick="location.hash='shop'">Shop Collection</button>
-          <button class="secondary" onclick="alert('Join our newsletter — coming soon!')">Join Newsletter</button>
-        </div>
-        <div style="margin-top:16px;color:var(--muted);font-size:13px">Free shipping on orders over ₹1499 • 7-day returns</div>
-      </div>
-
-      <aside class="hero-side">
-        <div class="badge"><div class="pill">Popular</div><div class="muted">Best sellers this week</div></div>
-        <div style="display:grid;gap:10px">
-          <div style="display:flex;gap:10px;align-items:center">
-            <div style="width:72px;height:72px;border-radius:10px;overflow:hidden;background:#051018"><img src="https://picsum.photos/seed/gt1/200/200" alt="item" style="width:100%;height:100%;object-fit:cover"></div>
-            <div>
-              <div style="font-weight:700">Essential Tee</div>
-              <div class="muted">₹799 · M-XXL</div>
+<body class="bg-gray-100 flex flex-col min-h-screen">
+    <header class="bg-white shadow-md py-4">
+        <div class="container mx-auto px-4 flex items-center justify-between">
+            <a href="#" class="text-2xl font-bold text-gray-800 rounded-lg p-2 hover:bg-gray-200 transition-colors duration-200">GenTrends</a>
+            <div class="flex-grow max-w-lg mx-8 relative">
+                <input type="text" id="searchInput" placeholder="Search for products..." class="w-full pl-10 pr-4 py-2 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-200">
+                <i class="fas fa-search absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"></i>
             </div>
-          </div>
-          <div style="display:flex;gap:10px;align-items:center">
-            <div style="width:72px;height:72px;border-radius:10px;overflow:hidden;background:#051018"><img src="https://picsum.photos/seed/gt2/200/200" alt="item" style="width:100%;height:100%;object-fit:cover"></div>
-            <div>
-              <div style="font-weight:700">Signature Hoodie</div>
-              <div class="muted">₹1999 · S-XL</div>
+            <nav class="flex items-center space-x-6">
+                <a href="#home" class="text-gray-600 hover:text-blue-500 transition-colors duration-200 font-medium">Home</a>
+                <a href="#products" class="text-gray-600 hover:text-blue-500 transition-colors duration-200 font-medium">Products</a>
+                <a href="#status" class="text-gray-600 hover:text-blue-500 transition-colors duration-200 font-medium">Status</a>
+                <button id="cartIcon" class="relative text-gray-600 hover:text-blue-500 transition-colors duration-200">
+                    <i class="fas fa-shopping-cart text-2xl"></i>
+                    <span id="cartCount" class="absolute -top-2 -right-2 bg-blue-500 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">0</span>
+                </button>
+            </nav>
+        </div>
+    </header>
+
+    <main id="mainContent" class="container mx-auto px-4 py-8 flex-grow">
+        <section id="home" class="py-8">
+            <h1 class="text-4xl font-bold text-center mb-4 text-gray-800">Welcome to GenTrends</h1>
+            <p class="text-center text-gray-600 mb-8 max-w-3xl mx-auto">Explore the latest trends in fashion and technology. Find your next favorite item with our curated selection of high-quality products.</p>
+        </section>
+
+        <section id="products" class="py-8">
+            <h2 class="text-3xl font-bold mb-6 text-gray-800">Our Products</h2>
+            <div id="productGrid" class="product-grid">
+                <!-- Product cards will be dynamically inserted here -->
             </div>
-          </div>
+        </section>
+
+        <section id="status" class="py-8 hidden">
+            <h2 class="text-3xl font-bold mb-6 text-gray-800">Check Order Status</h2>
+            <div class="bg-white p-8 rounded-xl shadow-lg max-w-lg mx-auto">
+                <div class="mb-4">
+                    <label for="statusInput" class="block text-gray-700 font-medium mb-2">Enter your Email or Mobile Number</label>
+                    <input type="text" id="statusInput" placeholder="Email or Mobile" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-200">
+                </div>
+                <button id="checkStatusBtn" class="w-full bg-blue-500 text-white font-semibold py-3 rounded-lg hover:bg-blue-600 transition-colors duration-200">Check Status</button>
+            </div>
+            <div id="orderStatusDisplay" class="mt-8">
+                <!-- Order status results will be displayed here -->
+            </div>
+        </section>
+
+        <!-- Product Detail Modal -->
+        <div id="productModal" class="fixed inset-0 z-50 flex items-center justify-center hidden modal-overlay">
+            <div class="bg-white rounded-xl shadow-2xl p-8 m-4 max-w-4xl w-full relative transform scale-95 transition-transform duration-300">
+                <button id="closeModalBtn" class="absolute top-4 right-4 text-gray-500 hover:text-gray-800 text-2xl">&times;</button>
+                <div class="flex flex-col md:flex-row gap-8">
+                    <div id="modalImageGallery" class="flex-1">
+                        <!-- Product images will be dynamically loaded here -->
+                        <img src="" alt="Product Image" id="modalMainImage" class="w-full h-auto object-cover rounded-lg shadow-lg mb-4">
+                    </div>
+                    <div class="flex-1">
+                        <h3 id="modalProductName" class="text-3xl font-bold mb-2 text-gray-800"></h3>
+                        <p id="modalProductPrice" class="text-2xl font-semibold text-blue-600 mb-4"></p>
+                        <p id="modalProductDescription" class="text-gray-600 mb-6"></p>
+                        <button id="addToCartBtn" class="bg-blue-500 text-white font-semibold py-3 px-8 rounded-lg hover:bg-blue-600 transition-colors duration-200 w-full md:w-auto">Add to Cart</button>
+                    </div>
+                </div>
+            </div>
         </div>
-      </aside>
-    </section>
 
-    <section id="shop">
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:18px">
-        <h3 style="margin:0">Shop</h3>
-        <div style="display:flex;gap:8px;align-items:center">
-          <select id="categorySelect" class="btn" style="background:transparent;border-radius:8px">
-            <option value="all">All Categories</option>
-            <option value="tees">Tees</option>
-            <option value="hoodies">Hoodies</option>
-            <option value="accessories">Accessories</option>
-          </select>
-          <select id="sortSelect" class="btn" style="background:transparent;border-radius:8px">
-            <option value="popular">Most Popular</option>
-            <option value="new">New</option>
-            <option value="price-asc">Price: Low → High</option>
-            <option value="price-desc">Price: High → Low</option>
-          </select>
+        <!-- Cart/Checkout View Modal -->
+        <div id="cartModal" class="fixed inset-0 z-50 flex items-center justify-center hidden modal-overlay">
+            <div class="bg-white rounded-xl shadow-2xl p-8 m-4 max-w-3xl w-full relative transform scale-95 transition-transform duration-300">
+                <button id="closeCartModalBtn" class="absolute top-4 right-4 text-gray-500 hover:text-gray-800 text-2xl">&times;</button>
+                <h3 class="text-3xl font-bold mb-6 text-gray-800">Your Cart</h3>
+                <div id="cartSummary" class="mb-6">
+                    <!-- Cart items will be dynamically loaded here -->
+                </div>
+                <div id="checkoutForm" class="bg-gray-50 p-6 rounded-lg">
+                    <h4 class="text-2xl font-semibold mb-4 text-gray-800">Checkout</h4>
+                    <form id="placeOrderForm">
+                        <div class="mb-4">
+                            <label for="customerName" class="block text-gray-700 font-medium mb-1">Full Name</label>
+                            <input type="text" id="customerName" name="customerName" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        </div>
+                        <div class="mb-4">
+                            <label for="mobileNumber" class="block text-gray-700 font-medium mb-1">Mobile Number</label>
+                            <input type="tel" id="mobileNumber" name="mobileNumber" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        </div>
+                        <div class="mb-4">
+                            <label for="email" class="block text-gray-700 font-medium mb-1">Email</label>
+                            <input type="email" id="email" name="email" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        </div>
+                        <div class="mb-4">
+                            <label for="shippingAddress" class="block text-gray-700 font-medium mb-1">Shipping Address</label>
+                            <textarea id="shippingAddress" name="shippingAddress" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
+                        </div>
+                        <div class="mb-6">
+                            <h5 class="text-gray-700 font-medium mb-2">Payment Method</h5>
+                            <label class="inline-flex items-center">
+                                <input type="radio" name="paymentMethod" value="cod" checked class="form-radio text-blue-600">
+                                <span class="ml-2">Cash on Delivery (COD)</span>
+                            </label>
+                        </div>
+                        <button type="submit" class="w-full bg-blue-500 text-white font-semibold py-3 rounded-lg hover:bg-blue-600 transition-colors duration-200">Place Order</button>
+                    </form>
+                </div>
+            </div>
         </div>
-      </div>
 
-      <div class="products-grid" id="productsGrid">
-        <!-- products injected by JS -->
-      </div>
-    </section>
-
-    <section id="about">
-      <h3>About GenTrends</h3>
-      <p class="muted">GenTrends started as a small passion project to make clean, wearable pieces that last. We focus on ethical sourcing, quality fabrics, and a small-batch approach so every piece gets the attention it deserves.</p>
-      <p class="muted">Based in India — crafted with care.</p>
-    </section>
-
-    <section id="contact">
-      <h3>Contact</h3>
-      <p class="muted">Questions? Email <a href="mailto:hello@gentrends.example">hello@gentrends.example</a> or use the quick form below.</p>
-      <form id="contactForm" style="display:grid;gap:10px;max-width:540px">
-        <input placeholder="Your name" required style="padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.03);background:transparent;color:inherit" />
-        <input placeholder="Email" type="email" required style="padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.03);background:transparent;color:inherit" />
-        <textarea placeholder="Message" rows="4" style="padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.03);background:transparent;color:inherit"></textarea>
-        <div>
-          <button class="primary" type="submit">Send message</button>
+        <!-- Notification/Message Box -->
+        <div id="messageBox" class="fixed bottom-8 right-8 bg-green-500 text-white px-6 py-4 rounded-xl shadow-lg z-50 transform translate-x-full transition-transform duration-300">
+            <span id="messageText"></span>
         </div>
-      </form>
-    </section>
+    </main>
 
-    <footer>
-      <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px">
-        <div>© <strong>GenTrends</strong> 2025</div>
-        <div class="muted">Made with ♥ — simple single-page store</div>
-      </div>
+    <footer class="bg-gray-800 text-white py-6 mt-8 rounded-t-xl">
+        <div class="container mx-auto text-center">
+            <p>&copy; 2024 GenTrends. All rights reserved.</p>
+        </div>
     </footer>
 
-  </main>
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, doc, getDoc, addDoc, setDoc, updateDoc, deleteDoc, onSnapshot, collection, query, where, addDoc, getDocs } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        
+        // Firebase configuration and initialization
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+        const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : {};
+        const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
 
-  <!-- Cart Modal -->
-  <div id="cartModal" class="modal hidden" aria-hidden="true">
-    <h4 style="margin-top:0">Your Cart</h4>
-    <div id="cartItems"></div>
-    <div style="display:flex;justify-content:space-between;align-items:center;margin-top:12px">
-      <div class="muted">Total</div>
-      <div id="cartTotal" style="font-weight:800">₹0</div>
-    </div>
-    <div style="margin-top:12px;display:flex;gap:8px">
-      <button class="primary" id="checkoutBtn">Checkout</button>
-      <button class="secondary" id="closeCart">Close</button>
-    </div>
-  </div>
+        let db, auth;
+        let productsData = [];
 
-  <script>
-    // Simple product data — replace with your real catalog or import from JSON
-    const PRODUCTS = [
-      {id:1,title:'Essential Tee',price:799,category:'tees',img:'https://picsum.photos/seed/gtp1/600/600',desc:'Soft cotton tee — everyday fit.'},
-      {id:2,title:'Signature Hoodie',price:1999,category:'hoodies',img:'https://picsum.photos/seed/gtp2/600/600',desc:'Cozy mid-weight hoodie.'},
-      {id:3,title:'Ribbed Beanie',price:499,category:'accessories',img:'https://picsum.photos/seed/gtp3/600/600',desc:'Warm stretch fit.'},
-      {id:4,title:'Relaxed Shirt',price:1199,category:'tees',img:'https://picsum.photos/seed/gtp4/600/600',desc:'Breezy, casual shirt.'},
-      {id:5,title:'Street Shorts',price:999,category:'tees',img:'https://picsum.photos/seed/gtp5/600/600',desc:'Comfort first shorts.'},
-      {id:6,title:'Canvas Tote',price:349,category:'accessories',img:'https://picsum.photos/seed/gtp6/600/600',desc:'Everyday carry tote.'}
-    ];
+        // UI Elements
+        const mainContent = document.getElementById('mainContent');
+        const productGrid = document.getElementById('productGrid');
+        const cartIcon = document.getElementById('cartIcon');
+        const cartCountSpan = document.getElementById('cartCount');
+        const searchInput = document.getElementById('searchInput');
 
-    // Cart state in localStorage
-    const CART_KEY = 'gentrends_cart_v1';
-    function loadCart(){try{return JSON.parse(localStorage.getItem(CART_KEY))||{}}catch(e){return {}}}
-    function saveCart(cart){localStorage.setItem(CART_KEY,JSON.stringify(cart))}
+        // Modals and Forms
+        const productModal = document.getElementById('productModal');
+        const cartModal = document.getElementById('cartModal');
+        const placeOrderForm = document.getElementById('placeOrderForm');
+        const statusSection = document.getElementById('status');
+        const checkStatusBtn = document.getElementById('checkStatusBtn');
+        const orderStatusDisplay = document.getElementById('orderStatusDisplay');
+        const messageBox = document.getElementById('messageBox');
+        const messageText = document.getElementById('messageText');
 
-    const productsGrid = document.getElementById('productsGrid');
-    const searchInput = document.getElementById('searchInput');
-    const categorySelect = document.getElementById('categorySelect');
-    const sortSelect = document.getElementById('sortSelect');
-    const cartModal = document.getElementById('cartModal');
-    const cartItemsEl = document.getElementById('cartItems');
-    const cartTotalEl = document.getElementById('cartTotal');
-    const cartCount = document.getElementById('cartCount');
+        // Navigation
+        document.querySelectorAll('nav a').forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                document.querySelectorAll('section').forEach(section => {
+                    section.classList.add('hidden');
+                });
+                const sectionId = e.target.getAttribute('href').substring(1);
+                if (sectionId) {
+                    document.getElementById(sectionId).classList.remove('hidden');
+                }
+            });
+        });
 
-    let cart = loadCart();
+        cartIcon.addEventListener('click', () => {
+            renderCartSummary();
+            cartModal.classList.remove('hidden');
+        });
 
-    function renderProducts(){
-      const q = (searchInput.value||'').toLowerCase().trim();
-      const cat = categorySelect.value;
-      let list = PRODUCTS.filter(p=> (cat==='all'||p.category===cat) && (p.title.toLowerCase().includes(q) || p.desc.toLowerCase().includes(q)));
-      // sort
-      const sort = sortSelect.value;
-      if(sort==='price-asc') list.sort((a,b)=>a.price-b.price);
-      if(sort==='price-desc') list.sort((a,b)=>b.price-a.price);
-      if(sort==='new') list = list.slice().reverse();
+        document.getElementById('closeModalBtn').addEventListener('click', () => {
+            productModal.classList.add('hidden');
+        });
 
-      productsGrid.innerHTML = '';
-      list.forEach(p=>{
-        const card = document.createElement('div'); card.className='card';
-        card.innerHTML = `
-          <div class="media"><img src="${p.img}" alt="${p.title}"></div>
-          <div style="display:flex;justify-content:space-between;align-items:center">
-            <div>
-              <div style="font-weight:700">${p.title}</div>
-              <div class="muted">${p.desc}</div>
-            </div>
-            <div style="text-align:right">
-              <div class="price">₹${p.price}</div>
-              <div class="muted" style="font-size:12px">VAT incl.</div>
-            </div>
-          </div>
-          <div style="display:flex;gap:8px">
-            <button class="btn" onclick="addToCart(${p.id})">Add to cart</button>
-            <button class="btn" onclick="viewProduct(${p.id})">View</button>
-          </div>
-        `;
-        productsGrid.appendChild(card);
-      })
-    }
+        document.getElementById('closeCartModalBtn').addEventListener('click', () => {
+            cartModal.classList.add('hidden');
+        });
 
-    function addToCart(id){
-      cart = loadCart();
-      cart[id] = (cart[id]||0)+1;
-      saveCart(cart);
-      updateCartUI();
-      openCart();
-    }
+        // Function to show a temporary message
+        function showMessage(text, isError = false) {
+            messageText.textContent = text;
+            messageBox.style.backgroundColor = isError ? '#ef4444' : '#22c55e';
+            messageBox.classList.remove('translate-x-full');
+            setTimeout(() => {
+                messageBox.classList.add('translate-x-full');
+            }, 3000);
+        }
+        
+        // Function to update the cart count in the header
+        function updateCartCount() {
+            const cart = JSON.parse(localStorage.getItem('cart')) || {};
+            const totalItems = Object.values(cart).reduce((sum, item) => sum + item.quantity, 0);
+            cartCountSpan.textContent = totalItems;
+        }
+        
+        // Function to render product cards on the page
+        function renderProducts(products) {
+            productGrid.innerHTML = '';
+            products.forEach(product => {
+                const productCard = document.createElement('div');
+                productCard.className = 'bg-white rounded-xl shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1 overflow-hidden cursor-pointer';
+                productCard.innerHTML = `
+                    <img src="${product.imageUrls[0]}" alt="${product.name}" class="w-full h-64 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold mb-1 text-gray-800">${product.name}</h3>
+                        <p class="text-blue-600 font-bold">$${product.price.toFixed(2)}</p>
+                    </div>
+                `;
+                productCard.addEventListener('click', () => showProductDetail(product));
+                productGrid.appendChild(productCard);
+            });
+        }
+        
+        // Function to show product detail modal
+        function showProductDetail(product) {
+            document.getElementById('modalProductName').textContent = product.name;
+            document.getElementById('modalProductPrice').textContent = `$${product.price.toFixed(2)}`;
+            document.getElementById('modalProductDescription').textContent = product.description;
+            document.getElementById('modalMainImage').src = product.imageUrls[0];
+            
+            const addToCartBtn = document.getElementById('addToCartBtn');
+            addToCartBtn.onclick = () => addToCart(product);
+            
+            productModal.classList.remove('hidden');
+        }
 
-    function viewProduct(id){
-      const p = PRODUCTS.find(x=>x.id===id);
-      alert(p.title + " — ₹"+p.price+"\n\n"+p.desc);
-    }
+        // Add product to local storage cart
+        function addToCart(product) {
+            const cart = JSON.parse(localStorage.getItem('cart')) || {};
+            if (cart[product.id]) {
+                cart[product.id].quantity += 1;
+            } else {
+                cart[product.id] = { ...product, quantity: 1 };
+            }
+            localStorage.setItem('cart', JSON.stringify(cart));
+            updateCartCount();
+            showMessage(`${product.name} added to cart!`);
+        }
+        
+        // Render the cart summary in the modal
+        function renderCartSummary() {
+            const cart = JSON.parse(localStorage.getItem('cart')) || {};
+            const cartSummaryDiv = document.getElementById('cartSummary');
+            let total = 0;
+            cartSummaryDiv.innerHTML = '';
+            
+            if (Object.keys(cart).length === 0) {
+                cartSummaryDiv.innerHTML = `<p class="text-center text-gray-500">Your cart is empty.</p>`;
+                placeOrderForm.classList.add('hidden');
+                return;
+            }
 
-    function updateCartUI(){
-      cart = loadCart();
-      const keys = Object.keys(cart);
-      const count = keys.reduce((s,k)=>s+cart[k],0);
-      if(count>0){cartCount.classList.remove('hidden');cartCount.textContent=count}else{cartCount.classList.add('hidden')}
+            placeOrderForm.classList.remove('hidden');
+            
+            Object.values(cart).forEach(item => {
+                const itemTotal = item.price * item.quantity;
+                total += itemTotal;
+                const cartItem = document.createElement('div');
+                cartItem.className = 'flex items-center justify-between py-2 border-b last:border-b-0';
+                cartItem.innerHTML = `
+                    <div class="flex items-center gap-4">
+                        <img src="${item.imageUrls[0]}" alt="${item.name}" class="w-16 h-16 rounded-lg object-cover">
+                        <div>
+                            <p class="font-semibold text-gray-800">${item.name}</p>
+                            <p class="text-sm text-gray-500">$${item.price.toFixed(2)} x ${item.quantity}</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <span class="font-bold text-gray-800">$${itemTotal.toFixed(2)}</span>
+                        <button class="remove-item-btn text-red-500 hover:text-red-700 transition-colors duration-200" data-id="${item.id}">&times;</button>
+                    </div>
+                `;
+                cartSummaryDiv.appendChild(cartItem);
+            });
+            
+            // Add event listeners for remove buttons
+            document.querySelectorAll('.remove-item-btn').forEach(button => {
+                button.addEventListener('click', (e) => {
+                    const idToRemove = e.target.dataset.id;
+                    const updatedCart = JSON.parse(localStorage.getItem('cart'));
+                    delete updatedCart[idToRemove];
+                    localStorage.setItem('cart', JSON.stringify(updatedCart));
+                    renderCartSummary();
+                    updateCartCount();
+                });
+            });
 
-      // render items
-      cartItemsEl.innerHTML='';
-      let total=0;
-      keys.forEach(k=>{
-        const qty = cart[k];
-        const p = PRODUCTS.find(x=>x.id==k);
-        if(!p) return;
-        total += p.price * qty;
-        const item = document.createElement('div');
-        item.style.display='flex';item.style.justifyContent='space-between';item.style.alignItems='center';item.style.padding='8px 0';
-        item.innerHTML = `<div style="min-width:0"><div style="font-weight:700">${p.title}</div><div class="muted" style="font-size:13px">₹${p.price} × ${qty}</div></div><div style="display:flex;gap:6px;align-items:center"><button class="btn" onclick="decrease(${p.id})">−</button><button class="btn" onclick="increase(${p.id})">+</button><button class="btn" onclick="removeItem(${p.id})">Remove</button></div>`;
-        cartItemsEl.appendChild(item);
-      })
-      cartTotalEl.textContent = '₹'+total;
-    }
+            // Add total
+            const totalDiv = document.createElement('div');
+            totalDiv.className = 'flex justify-between items-center mt-4 pt-4 border-t-2 border-dashed';
+            totalDiv.innerHTML = `<span class="text-lg font-bold">Total:</span><span class="text-xl font-bold text-blue-600">$${total.toFixed(2)}</span>`;
+            cartSummaryDiv.appendChild(totalDiv);
+        }
+        
+        // Handle checkout form submission
+        placeOrderForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const cart = JSON.parse(localStorage.getItem('cart'));
+            if (!cart || Object.keys(cart).length === 0) {
+                showMessage('Your cart is empty. Please add items to place an order.', true);
+                return;
+            }
+            
+            const formData = new FormData(placeOrderForm);
+            const orderDetails = {
+                customerName: formData.get('customerName'),
+                mobileNumber: formData.get('mobileNumber'),
+                email: formData.get('email'),
+                address: formData.get('shippingAddress'),
+                orderItems: Object.values(cart).map(item => ({ id: item.id, name: item.name, quantity: item.quantity, price: item.price })),
+                totalPrice: Object.values(cart).reduce((sum, item) => sum + item.price * item.quantity, 0),
+                status: 'Pending',
+                createdAt: new Date()
+            };
 
-    function increase(id){cart[id]=(cart[id]||0)+1;saveCart(cart);updateCartUI();}
-    function decrease(id){if(!cart[id]) return;cart[id]=Math.max(0,cart[id]-1);if(cart[id]===0) delete cart[id];saveCart(cart);updateCartUI();}
-    function removeItem(id){delete cart[id];saveCart(cart);updateCartUI();}
+            try {
+                await addDoc(collection(db, 'orders'), orderDetails);
+                localStorage.removeItem('cart');
+                updateCartCount();
+                cartModal.classList.add('hidden');
+                showMessage('Order placed successfully! Thank you for your purchase.');
+                placeOrderForm.reset();
+            } catch (error) {
+                console.error("Error placing order: ", error);
+                showMessage('Failed to place order. Please try again.', true);
+            }
+        });
+        
+        // Handle order status check
+        checkStatusBtn.addEventListener('click', async () => {
+            const input = document.getElementById('statusInput').value.trim();
+            if (!input) {
+                showMessage('Please enter an email or mobile number.', true);
+                return;
+            }
+            
+            orderStatusDisplay.innerHTML = '<p class="text-center text-gray-500">Checking for orders...</p>';
+            
+            try {
+                let orders = [];
+                // Query by email
+                const emailQuery = query(collection(db, `artifacts/${appId}/public/data/orders`), where('email', '==', input));
+                const emailSnapshot = await getDocs(emailQuery);
+                emailSnapshot.forEach(doc => orders.push({ id: doc.id, ...doc.data() }));
 
-    function openCart(){cartModal.classList.remove('hidden');cartModal.setAttribute('aria-hidden','false')}
-    function closeCart(){cartModal.classList.add('hidden');cartModal.setAttribute('aria-hidden','true')}
+                // Query by mobile number
+                const mobileQuery = query(collection(db, `artifacts/${appId}/public/data/orders`), where('mobileNumber', '==', input));
+                const mobileSnapshot = await getDocs(mobileQuery);
+                mobileSnapshot.forEach(doc => {
+                    // Avoid duplicates if both email and mobile match the same document
+                    if (!orders.some(order => order.id === doc.id)) {
+                        orders.push({ id: doc.id, ...doc.data() });
+                    }
+                });
 
-    document.getElementById('toggleCart').addEventListener('click',()=>{
-      if(cartModal.classList.contains('hidden')) openCart(); else closeCart();
-    })
-    document.getElementById('closeCart').addEventListener('click',closeCart);
-    document.getElementById('checkoutBtn').addEventListener('click',()=>{alert('Checkout flow not implemented — integrate a payment gateway or redirect to cart page.');})
+                if (orders.length > 0) {
+                    orderStatusDisplay.innerHTML = `<h3 class="text-xl font-bold mb-4">Orders Found:</h3>`;
+                    orders.forEach(order => {
+                        const orderItem = document.createElement('div');
+                        orderItem.className = 'bg-white p-6 rounded-xl shadow-lg mb-4';
+                        orderItem.innerHTML = `
+                            <p class="font-bold">Order ID: <span class="text-gray-600 font-normal">${order.id}</span></p>
+                            <p class="font-bold">Status: <span class="text-blue-500 font-normal">${order.status}</span></p>
+                            <p class="font-bold">Order Date: <span class="text-gray-600 font-normal">${order.createdAt.toDate().toLocaleString()}</span></p>
+                            <p class="font-bold mt-2">Items:</p>
+                            <ul class="list-disc list-inside text-gray-600">
+                                ${order.orderItems.map(item => `<li>${item.name} (${item.quantity}) - $${(item.price * item.quantity).toFixed(2)}</li>`).join('')}
+                            </ul>
+                            <p class="font-bold mt-2">Total: <span class="text-blue-600">$${order.totalPrice.toFixed(2)}</span></p>
+                        `;
+                        orderStatusDisplay.appendChild(orderItem);
+                    });
+                } else {
+                    orderStatusDisplay.innerHTML = `<p class="text-center text-gray-500">No orders found for that email or mobile number.</p>`;
+                }
+            } catch (error) {
+                console.error("Error fetching order status: ", error);
+                orderStatusDisplay.innerHTML = `<p class="text-center text-red-500">An error occurred. Please try again later.</p>`;
+            }
+        });
 
-    document.getElementById('clearSearch').addEventListener('click',()=>{searchInput.value='';renderProducts();})
-    searchInput.addEventListener('input',()=>renderProducts());
-    categorySelect.addEventListener('change',renderProducts);
-    sortSelect.addEventListener('change',renderProducts);
+        // Search functionality
+        searchInput.addEventListener('input', () => {
+            const searchTerm = searchInput.value.toLowerCase();
+            const filteredProducts = productsData.filter(product => 
+                product.name.toLowerCase().includes(searchTerm) || 
+                product.description.toLowerCase().includes(searchTerm)
+            );
+            renderProducts(filteredProducts);
+        });
 
-    // contact form stub
-    document.getElementById('contactForm').addEventListener('submit', (e)=>{e.preventDefault();alert('Thanks! Message received (demo).');e.target.reset()})
+        // Initial setup on page load
+        window.onload = async () => {
+            try {
+                // Initialize Firebase with provided configuration
+                const app = initializeApp(firebaseConfig);
+                auth = getAuth(app);
+                db = getFirestore(app);
 
-    // hash navigation smooth
-    document.querySelectorAll('a[href^="#"]').forEach(a=>{
-      a.addEventListener('click', (ev)=>{
-        ev.preventDefault(); const tgt = document.querySelector(a.getAttribute('href')); if(tgt) tgt.scrollIntoView({behavior:'smooth',block:'start'});
-      })
-    })
+                // Authenticate with the provided token or anonymously
+                if (initialAuthToken) {
+                    await signInWithCustomToken(auth, initialAuthToken);
+                } else {
+                    await signInAnonymously(auth);
+                }
 
-    // initialize
-    renderProducts();
-    updateCartUI();
-  </script>
+                // Check for auth state changes before proceeding with Firestore operations
+                onAuthStateChanged(auth, async (user) => {
+                    if (user) {
+                        console.log("Authenticated with user:", user.uid);
+                        // Fetch products once the user is authenticated
+                        const productsCollectionRef = collection(db, `artifacts/${appId}/public/data/products`);
+                        const q = query(productsCollectionRef);
+                        onSnapshot(q, (querySnapshot) => {
+                            productsData = [];
+                            querySnapshot.forEach((doc) => {
+                                productsData.push({ id: doc.id, ...doc.data() });
+                            });
+                            renderProducts(productsData);
+                        });
+                        updateCartCount();
+                    } else {
+                        console.log("Authentication failed.");
+                        showMessage("Authentication failed. Please check the provided token.", true);
+                    }
+                });
+            } catch (error) {
+                console.error("Firebase initialization or authentication failed:", error);
+                showMessage("Failed to initialize the application.", true);
+            }
+        };
+    </script>
 </body>
-  </html>
-          
+</html>
