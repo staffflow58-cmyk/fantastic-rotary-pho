@@ -13,23 +13,47 @@
         body { font-family: 'Inter', sans-serif; background-color: #f7fafc; }
         .modal-overlay { background-color: rgba(0, 0, 0, 0.5); }
         .product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 1rem; }
+        /* Mobile-specific adjustments for the modal */
+        #productModal > div {
+            transform: scale(1);
+            max-width: 100%;
+            height: 100%;
+            margin: 0;
+            border-radius: 0;
+            overflow-y: auto;
+        }
+        @media (min-width: 768px) {
+            #productModal > div {
+                transform: scale(0.95);
+                max-width: 64rem;
+                height: auto;
+                margin: 1rem;
+                border-radius: 0.75rem;
+            }
+        }
     </style>
 </head>
 <body class="bg-gray-100 flex flex-col min-h-screen">
     <header class="bg-white shadow-md py-4">
-        <div class="container mx-auto px-4 flex items-center justify-between">
-            <a href="#" class="text-2xl font-bold text-gray-800 rounded-lg p-2 hover:bg-gray-200 transition-colors duration-200">GenTrends</a>
-            <div class="flex-grow max-w-lg mx-8 relative">
+        <div class="container mx-auto px-4 flex flex-col md:flex-row items-center justify-between">
+            <div class="w-full md:w-auto flex items-center justify-between mb-4 md:mb-0">
+                <a href="#" class="text-2xl font-bold text-gray-800 rounded-lg p-2 hover:bg-gray-200 transition-colors duration-200">GenTrends</a>
+                <button id="cartIcon" class="relative text-gray-600 hover:text-blue-500 transition-colors duration-200 md:hidden">
+                    <i class="fas fa-shopping-cart text-2xl"></i>
+                    <span id="cartCount" class="absolute -top-2 -right-2 bg-blue-500 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">0</span>
+                </button>
+            </div>
+            <div class="flex-grow w-full md:max-w-lg md:mx-8 relative mb-4 md:mb-0">
                 <input type="text" id="searchInput" placeholder="Search for products..." class="w-full pl-10 pr-4 py-2 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-200">
                 <i class="fas fa-search absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"></i>
             </div>
-            <nav class="flex items-center space-x-6">
-                <a href="#home" class="text-gray-600 hover:text-blue-500 transition-colors duration-200 font-medium">Home</a>
-                <a href="#products" class="text-gray-600 hover:text-blue-500 transition-colors duration-200 font-medium">Products</a>
-                <a href="#status" class="text-gray-600 hover:text-blue-500 transition-colors duration-200 font-medium">Status</a>
-                <button id="cartIcon" class="relative text-gray-600 hover:text-blue-500 transition-colors duration-200">
+            <nav class="w-full md:w-auto flex justify-center md:justify-end items-center space-x-6">
+                <a href="#home" class="text-gray-600 hover:text-blue-500 transition-colors duration-200 font-medium text-sm md:text-base">Home</a>
+                <a href="#products" class="text-gray-600 hover:text-blue-500 transition-colors duration-200 font-medium text-sm md:text-base">Products</a>
+                <a href="#status" class="text-gray-600 hover:text-blue-500 transition-colors duration-200 font-medium text-sm md:text-base">Status</a>
+                <button id="cartIconDesktop" class="relative text-gray-600 hover:text-blue-500 transition-colors duration-200 hidden md:inline-block">
                     <i class="fas fa-shopping-cart text-2xl"></i>
-                    <span id="cartCount" class="absolute -top-2 -right-2 bg-blue-500 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">0</span>
+                    <span id="cartCountDesktop" class="absolute -top-2 -right-2 bg-blue-500 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">0</span>
                 </button>
             </nav>
         </div>
@@ -37,12 +61,12 @@
 
     <main id="mainContent" class="container mx-auto px-4 py-8 flex-grow">
         <section id="home" class="py-8">
-            <h1 class="text-4xl font-bold text-center mb-4 text-gray-800">Welcome to GenTrends</h1>
-            <p class="text-center text-gray-600 mb-8 max-w-3xl mx-auto">Explore the latest trends in fashion and technology. Find your next favorite item with our curated selection of high-quality products.</p>
+            <h1 class="text-4xl md:text-5xl font-bold text-center mb-4 text-gray-800">Welcome to GenTrends</h1>
+            <p class="text-center text-gray-600 mb-8 max-w-3xl mx-auto text-sm md:text-base">Explore the latest trends in fashion and technology. Find your next favorite item with our curated selection of high-quality products.</p>
         </section>
 
         <section id="products" class="py-8">
-            <h2 class="text-3xl font-bold mb-6 text-gray-800">Our Products</h2>
+            <h2 class="text-3xl md:text-4xl font-bold mb-6 text-gray-800">Our Products</h2>
             <div id="productGrid" class="product-grid">
                 <!-- Product cards will be dynamically inserted here -->
             </div>
@@ -64,17 +88,17 @@
 
         <!-- Product Detail Modal -->
         <div id="productModal" class="fixed inset-0 z-50 flex items-center justify-center hidden modal-overlay">
-            <div class="bg-white rounded-xl shadow-2xl p-8 m-4 max-w-4xl w-full relative transform scale-95 transition-transform duration-300">
+            <div class="bg-white rounded-xl shadow-2xl p-4 md:p-8 w-full h-full md:w-auto md:h-auto md:max-w-4xl relative transform scale-95 transition-transform duration-300">
                 <button id="closeModalBtn" class="absolute top-4 right-4 text-gray-500 hover:text-gray-800 text-2xl">&times;</button>
-                <div class="flex flex-col md:flex-row gap-8">
+                <div class="flex flex-col md:flex-row gap-8 overflow-y-auto">
                     <div id="modalImageGallery" class="flex-1">
                         <!-- Product images will be dynamically loaded here -->
                         <img src="" alt="Product Image" id="modalMainImage" class="w-full h-auto object-cover rounded-lg shadow-lg mb-4">
                     </div>
                     <div class="flex-1">
-                        <h3 id="modalProductName" class="text-3xl font-bold mb-2 text-gray-800"></h3>
-                        <p id="modalProductPrice" class="text-2xl font-semibold text-blue-600 mb-4"></p>
-                        <p id="modalProductDescription" class="text-gray-600 mb-6"></p>
+                        <h3 id="modalProductName" class="text-2xl md:text-3xl font-bold mb-2 text-gray-800"></h3>
+                        <p id="modalProductPrice" class="text-xl md:text-2xl font-semibold text-blue-600 mb-4"></p>
+                        <p id="modalProductDescription" class="text-gray-600 mb-6 text-sm md:text-base"></p>
                         <button id="addToCartBtn" class="bg-blue-500 text-white font-semibold py-3 px-8 rounded-lg hover:bg-blue-600 transition-colors duration-200 w-full md:w-auto">Add to Cart</button>
                     </div>
                 </div>
@@ -83,47 +107,47 @@
 
         <!-- Cart/Checkout View Modal -->
         <div id="cartModal" class="fixed inset-0 z-50 flex items-center justify-center hidden modal-overlay">
-            <div class="bg-white rounded-xl shadow-2xl p-8 m-4 max-w-3xl w-full relative transform scale-95 transition-transform duration-300">
+            <div class="bg-white rounded-xl shadow-2xl p-4 md:p-8 w-full h-full md:w-auto md:h-auto md:max-w-3xl relative transform scale-95 transition-transform duration-300">
                 <button id="closeCartModalBtn" class="absolute top-4 right-4 text-gray-500 hover:text-gray-800 text-2xl">&times;</button>
-                <h3 class="text-3xl font-bold mb-6 text-gray-800">Your Cart</h3>
-                <div id="cartSummary" class="mb-6">
+                <h3 class="text-2xl md:text-3xl font-bold mb-6 text-gray-800">Your Cart</h3>
+                <div id="cartSummary" class="mb-6 overflow-y-auto max-h-[60vh]">
                     <!-- Cart items will be dynamically loaded here -->
                 </div>
                 <div id="checkoutForm" class="bg-gray-50 p-6 rounded-lg">
-                    <h4 class="text-2xl font-semibold mb-4 text-gray-800">Checkout</h4>
+                    <h4 class="text-xl md:text-2xl font-semibold mb-4 text-gray-800">Checkout</h4>
                     <form id="placeOrderForm">
                         <div class="mb-4">
-                            <label for="customerName" class="block text-gray-700 font-medium mb-1">Full Name</label>
-                            <input type="text" id="customerName" name="customerName" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            <label for="customerName" class="block text-gray-700 font-medium mb-1 text-sm">Full Name</label>
+                            <input type="text" id="customerName" name="customerName" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm">
                         </div>
                         <div class="mb-4">
-                            <label for="mobileNumber" class="block text-gray-700 font-medium mb-1">Mobile Number</label>
-                            <input type="tel" id="mobileNumber" name="mobileNumber" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            <label for="mobileNumber" class="block text-gray-700 font-medium mb-1 text-sm">Mobile Number</label>
+                            <input type="tel" id="mobileNumber" name="mobileNumber" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm">
                         </div>
                         <div class="mb-4">
-                            <label for="email" class="block text-gray-700 font-medium mb-1">Email</label>
-                            <input type="email" id="email" name="email" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+                            <label for="email" class="block text-gray-700 font-medium mb-1 text-sm">Email</label>
+                            <input type="email" id="email" name="email" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm">
                         </div>
                         <div class="mb-4">
-                            <label for="shippingAddress" class="block text-gray-700 font-medium mb-1">Shipping Address</label>
-                            <textarea id="shippingAddress" name="shippingAddress" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"></textarea>
+                            <label for="shippingAddress" class="block text-gray-700 font-medium mb-1 text-sm">Shipping Address</label>
+                            <textarea id="shippingAddress" name="shippingAddress" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"></textarea>
                         </div>
                         <div class="mb-6">
-                            <h5 class="text-gray-700 font-medium mb-2">Payment Method</h5>
-                            <label class="inline-flex items-center">
+                            <h5 class="text-gray-700 font-medium mb-2 text-sm">Payment Method</h5>
+                            <label class="inline-flex items-center text-sm">
                                 <input type="radio" name="paymentMethod" value="cod" checked class="form-radio text-blue-600">
                                 <span class="ml-2">Cash on Delivery (COD)</span>
                             </label>
                         </div>
-                        <button type="submit" class="w-full bg-blue-500 text-white font-semibold py-3 rounded-lg hover:bg-blue-600 transition-colors duration-200">Place Order</button>
+                        <button type="submit" class="w-full bg-blue-500 text-white font-semibold py-3 rounded-lg hover:bg-blue-600 transition-colors duration-200 text-sm md:text-base">Place Order</button>
                     </form>
                 </div>
             </div>
         </div>
 
         <!-- Notification/Message Box -->
-        <div id="messageBox" class="fixed bottom-8 right-8 bg-green-500 text-white px-6 py-4 rounded-xl shadow-lg z-50 transform translate-x-full transition-transform duration-300">
-            <span id="messageText"></span>
+        <div id="messageBox" class="fixed bottom-4 md:bottom-8 right-4 md:right-8 bg-green-500 text-white px-4 py-3 md:px-6 md:py-4 rounded-xl shadow-lg z-50 transform translate-x-full transition-transform duration-300">
+            <span id="messageText" class="text-sm md:text-base"></span>
         </div>
     </main>
 
@@ -149,8 +173,10 @@
         // UI Elements
         const mainContent = document.getElementById('mainContent');
         const productGrid = document.getElementById('productGrid');
-        const cartIcon = document.getElementById('cartIcon');
-        const cartCountSpan = document.getElementById('cartCount');
+        const cartIconMobile = document.getElementById('cartIcon');
+        const cartIconDesktop = document.getElementById('cartIconDesktop');
+        const cartCountMobileSpan = document.getElementById('cartCount');
+        const cartCountDesktopSpan = document.getElementById('cartCountDesktop');
         const searchInput = document.getElementById('searchInput');
 
         // Modals and Forms
@@ -177,7 +203,12 @@
             });
         });
 
-        cartIcon.addEventListener('click', () => {
+        cartIconMobile.addEventListener('click', () => {
+            renderCartSummary();
+            cartModal.classList.remove('hidden');
+        });
+        
+        cartIconDesktop.addEventListener('click', () => {
             renderCartSummary();
             cartModal.classList.remove('hidden');
         });
@@ -204,7 +235,8 @@
         function updateCartCount() {
             const cart = JSON.parse(localStorage.getItem('cart')) || {};
             const totalItems = Object.values(cart).reduce((sum, item) => sum + item.quantity, 0);
-            cartCountSpan.textContent = totalItems;
+            cartCountMobileSpan.textContent = totalItems;
+            cartCountDesktopSpan.textContent = totalItems;
         }
         
         // Function to render product cards on the page
@@ -328,7 +360,7 @@
             };
 
             try {
-                await addDoc(collection(db, 'orders'), orderDetails);
+                await addDoc(collection(db, `artifacts/${appId}/public/data/orders`), orderDetails);
                 localStorage.removeItem('cart');
                 updateCartCount();
                 cartModal.classList.add('hidden');
