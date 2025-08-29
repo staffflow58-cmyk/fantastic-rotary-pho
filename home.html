@@ -426,20 +426,23 @@
                     await signInAnonymously(auth);
                 }
 
+                // Listen for authentication state changes and set up listeners
                 onAuthStateChanged(auth, (user) => {
                     if (user) {
                         userId = user.uid;
                         // Real-time listener for products
                         const productsCollectionRef = collection(db, `artifacts/${appId}/public/data/products`);
                         onSnapshot(productsCollectionRef, (querySnapshot) => {
+                            console.log("E-store: Received a new product snapshot.");
                             allProducts = [];
                             querySnapshot.forEach(doc => {
                                 allProducts.push({ id: doc.id, ...doc.data() });
                             });
+                            console.log(`E-store: Found ${allProducts.length} products.`);
                             renderProducts(allProducts);
                         });
                     } else {
-                        console.log("Not signed in, using anonymous auth.");
+                        console.log("E-store: Not signed in, using anonymous auth.");
                     }
                 });
 
