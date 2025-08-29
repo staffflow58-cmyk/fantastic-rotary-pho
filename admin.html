@@ -389,10 +389,12 @@
                         // Set up real-time listeners for products and orders
                         const productsCollectionRef = collection(db, `artifacts/${appId}/public/data/products`);
                         onSnapshot(productsCollectionRef, (querySnapshot) => {
+                            console.log("Admin Panel: Received a new product snapshot.");
                             const products = [];
                             querySnapshot.forEach(doc => {
                                 products.push({ id: doc.id, ...doc.data() });
                             });
+                            console.log(`Admin Panel: Found ${products.length} products.`);
                             renderProductsTable(products);
                         });
                         
