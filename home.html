@@ -260,15 +260,21 @@
             productsGrid.innerHTML = '';
             products.forEach(product => {
                 const productCard = document.createElement('div');
-                productCard.className = 'bg-white rounded-xl shadow-lg p-4 cursor-pointer hover:shadow-xl transform hover:-translate-y-1 transition-all duration-300';
+                productCard.className = 'relative bg-white rounded-xl shadow-lg p-4 cursor-pointer hover:shadow-xl transform hover:-translate-y-1 transition-all duration-300';
                 
                 // Add click event listener to update the URL hash
                 productCard.addEventListener('click', () => {
                     window.location.hash = `#products/${product.id}`;
                 });
 
+                let stockOverlay = '';
+                if (!product.stock) {
+                    stockOverlay = `<div class="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 text-white font-bold text-lg rounded-xl">OUT OF STOCK</div>`;
+                }
+
                 productCard.innerHTML = `
                     <img src="${product.imageUrls[0]}" alt="${product.name}" class="w-full aspect-square object-cover rounded-lg mb-4">
+                    ${stockOverlay}
                     <h3 class="text-lg font-semibold text-gray-800">${product.name}</h3>
                     <p class="text-gray-600 mt-2">₹${product.price.toFixed(2)}</p>
                 `;
@@ -280,6 +286,17 @@
         function showProductModal(product) {
             const content = document.getElementById('productModalContent');
             const imageUrlsHtml = product.imageUrls.map(url => `<img src="${url}" alt="${product.name}" class="w-full rounded-lg mb-2">`).join('');
+            
+            let buttonText = "Add to Cart";
+            let buttonClass = "w-full bg-blue-500 text-white font-semibold py-3 rounded-lg hover:bg-blue-600 transition-colors duration-200";
+            let buttonDisabled = "";
+
+            if (!product.stock) {
+                buttonText = "Out of Stock";
+                buttonClass = "w-full bg-gray-400 text-white font-semibold py-3 rounded-lg cursor-not-allowed";
+                buttonDisabled = "disabled";
+            }
+            
             content.innerHTML = `
                 <div class="md:flex md:space-x-8">
                     <div class="md:w-1/2">
@@ -289,24 +306,28 @@
                         <h2 class="text-3xl font-bold mb-4 text-gray-800">${product.name}</h2>
                         <p class="text-2xl font-semibold text-blue-600 mb-4">₹${product.price.toFixed(2)}</p>
                         <p class="text-gray-600 mb-6">${product.description}</p>
-                        <button id="addToCartBtn" class="w-full bg-blue-500 text-white font-semibold py-3 rounded-lg hover:bg-blue-600 transition-colors duration-200">
-                            Add to Cart
+                        <button id="addToCartBtn" class="${buttonClass}" ${buttonDisabled}>
+                            ${buttonText}
                         </button>
                     </div>
                 </div>
             `;
             productModal.classList.remove('hidden');
-            document.getElementById('addToCartBtn').addEventListener('click', () => {
-                const cart = getCart();
-                if (cart[product.id]) {
-                    cart[product.id].quantity += 1;
-                } else {
-                    cart[product.id] = { ...product, quantity: 1 };
-                }
-                saveCart(cart);
-                showMessage(`${product.name} added to cart!`);
-                window.location.hash = '#products';
-            });
+            
+            const addToCartBtn = document.getElementById('addToCartBtn');
+            if (addToCartBtn && !addToCartBtn.hasAttribute('disabled')) {
+                addToCartBtn.addEventListener('click', () => {
+                    const cart = getCart();
+                    if (cart[product.id]) {
+                        cart[product.id].quantity += 1;
+                    } else {
+                        cart[product.id] = { ...product, quantity: 1 };
+                    }
+                    saveCart(cart);
+                    showMessage(`${product.name} added to cart!`);
+                    window.location.hash = '#products';
+                });
+            }
         }
         
         closeModalBtn.addEventListener('click', () => window.location.hash = '#products');
