@@ -104,9 +104,9 @@
                                 <tr>
                                     <th class="py-3 px-4 text-left font-semibold text-gray-600">Order ID</th>
                                     <th class="py-3 px-4 text-left font-semibold text-gray-600">Customer</th>
+                                    <th class="py-3 px-4 text-left font-semibold text-gray-600">Ordered Items</th>
                                     <th class="py-3 px-4 text-left font-semibold text-gray-600">Total Price</th>
                                     <th class="py-3 px-4 text-left font-semibold text-gray-600">Status</th>
-                                    <th class="py-3 px-4 text-left font-semibold text-gray-600">Actions</th>
                                 </tr>
                             </thead>
                             <tbody id="ordersTableBody">
@@ -248,7 +248,7 @@
             orders.forEach(order => {
                 const row = document.createElement('tr');
                 row.className = 'border-b last:border-b-0 hover:bg-gray-50 transition-colors duration-150';
-                const orderItemsHtml = order.orderItems.map(item => `<li>${item.name} (${item.quantity})</li>`).join('');
+                const orderItemsHtml = order.orderItems.map(item => `<li class="text-sm text-gray-600">${item.name} (x${item.quantity})</li>`).join('');
                 row.innerHTML = `
                     <td class="py-3 px-4 text-sm">${order.id.substring(0, 8)}...</td>
                     <td class="py-3 px-4">
@@ -256,6 +256,9 @@
                         <p class="text-xs text-gray-500">${order.email}</p>
                         <p class="text-xs text-gray-500">${order.mobileNumber}</p>
                         <p class="text-xs text-gray-500">Pincode: ${order.pincode}</p>
+                    </td>
+                    <td class="py-3 px-4">
+                        <ul class="list-disc list-inside space-y-1">${orderItemsHtml}</ul>
                     </td>
                     <td class="py-3 px-4 font-semibold text-blue-600">₹${order.totalPrice.toFixed(2)}</td>
                     <td class="py-3 px-4">
