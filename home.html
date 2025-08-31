@@ -17,19 +17,23 @@
 <body class="bg-gray-100 flex flex-col min-h-screen">
     <!-- Main Website Header -->
     <header id="mainHeader" class="bg-white shadow-md py-4">
-        <div class="container mx-auto px-4 flex flex-col md:flex-row items-center justify-between">
-            <a href="#home" class="text-2xl font-bold text-gray-800 rounded-lg p-2 hover:bg-gray-200 transition-colors duration-200">GenTrends</a>
-            <div class="flex-grow w-full md:max-w-lg md:mx-8 relative mt-4 md:mt-0">
+        <div class="container mx-auto px-4">
+            <!-- Logo and Nav -->
+            <div class="flex items-center justify-between mb-4 md:mb-0">
+                <a href="#home" class="text-2xl font-bold text-gray-800 rounded-lg p-2 hover:bg-gray-200 transition-colors duration-200">GenTrends</a>
+                <nav class="flex items-center space-x-6">
+                    <a href="#status" class="text-gray-600 hover:text-blue-500 transition-colors duration-200 font-medium website-nav-link">Status</a>
+                    <button id="cartIcon" class="relative text-gray-600 hover:text-blue-500 transition-colors duration-200">
+                        <i class="fas fa-shopping-cart text-2xl"></i>
+                        <span id="cartCount" class="absolute -top-2 -right-2 bg-blue-500 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">0</span>
+                    </button>
+                </nav>
+            </div>
+            <!-- Search Bar -->
+            <div class="w-full relative mt-4">
                 <input type="text" id="searchInput" placeholder="Search for products..." class="w-full pl-10 pr-4 py-2 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-200">
                 <i class="fas fa-search absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"></i>
             </div>
-            <nav class="flex items-center space-x-6 mt-4 md:mt-0">
-                <a href="#status" class="text-gray-600 hover:text-blue-500 transition-colors duration-200 font-medium website-nav-link">Status</a>
-                <button id="cartIcon" class="relative text-gray-600 hover:text-blue-500 transition-colors duration-200">
-                    <i class="fas fa-shopping-cart text-2xl"></i>
-                    <span id="cartCount" class="absolute -top-2 -right-2 bg-blue-500 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">0</span>
-                </button>
-            </nav>
         </div>
     </header>
 
