@@ -228,7 +228,7 @@
                 row.innerHTML = `
                     <td class="py-3 px-4"><img src="${product.imageUrls[0]}" class="w-16 h-16 rounded-lg object-cover"></td>
                     <td class="py-3 px-4">${product.name}</td>
-                    <td class="py-3 px-4">$${product.price.toFixed(2)}</td>
+                    <td class="py-3 px-4">₹${product.price.toFixed(2)}</td>
                     <td class="py-3 px-4 space-x-2">
                         <button data-id="${product.id}" class="edit-btn bg-yellow-400 text-gray-800 font-semibold py-2 px-4 rounded-lg hover:bg-yellow-500 transition-colors duration-200">Edit</button>
                         <button data-id="${product.id}" class="delete-btn bg-red-500 text-white font-semibold py-2 px-4 rounded-lg hover:bg-red-600 transition-colors duration-200">Delete</button>
@@ -251,8 +251,13 @@
                 const orderItemsHtml = order.orderItems.map(item => `<li>${item.name} (${item.quantity})</li>`).join('');
                 row.innerHTML = `
                     <td class="py-3 px-4 text-sm">${order.id.substring(0, 8)}...</td>
-                    <td class="py-3 px-4">${order.customerName}</td>
-                    <td class="py-3 px-4 font-semibold text-blue-600">$${order.totalPrice.toFixed(2)}</td>
+                    <td class="py-3 px-4">
+                        <p class="font-semibold">${order.customerName}</p>
+                        <p class="text-xs text-gray-500">${order.email}</p>
+                        <p class="text-xs text-gray-500">${order.mobileNumber}</p>
+                        <p class="text-xs text-gray-500">Pincode: ${order.pincode}</p>
+                    </td>
+                    <td class="py-3 px-4 font-semibold text-blue-600">₹${order.totalPrice.toFixed(2)}</td>
                     <td class="py-3 px-4">
                         <select data-id="${order.id}" class="status-select border border-gray-300 rounded-lg py-1 px-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
                             <option value="Pending" ${order.status === 'Pending' ? 'selected' : ''}>Pending</option>
